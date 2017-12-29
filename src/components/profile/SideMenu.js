@@ -85,15 +85,21 @@ class SideMenu extends Component {
   handleKeyPress = e => {
     const { appState, history } = this.props;
     let parsed = this.state.dataParse;
-    parsed.name = this.state.search;
+    if (e.key !== 'Enter') {
+      parsed.name = this.state.search + e.key;
+    }
     const stringified = queryString.stringify(parsed);
-    if (e.key === 'Enter') {
+    //console.log(e.keyCode);
+    //if (e.key === 'Enter') {
+      // this.setState({
+      //   dataParse: parsed
+      // })
       this.setState({
-        dataParse: parsed
+        search: e.target.value
       })
       appState.getTableList({qs:parsed});
       history.push(`/profiles/1?${stringified}`)
-    }
+    //}
   }
 
   handleChangeSelect = (selectValue) => {
